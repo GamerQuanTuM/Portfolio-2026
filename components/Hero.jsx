@@ -8,21 +8,33 @@ const HeroModel = dynamic(() => import('./HeroModel'), { ssr: false })
 
 export default function Hero() {
   const containerRef = useRef(null)
+  const chapterRef = useRef(null)
   const titleRef = useRef(null)
   const subtitleRef = useRef(null)
+  const storyRef = useRef(null)
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
     tl.fromTo(
+      chapterRef.current,
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.8 }
+    ).fromTo(
       titleRef.current,
       { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, delay: 0.2 }
+      { y: 0, opacity: 1, duration: 1 },
+      '-=0.4'
     ).fromTo(
       subtitleRef.current,
       { y: 50, opacity: 0 },
       { y: 0, opacity: 1, duration: 1 },
       '-=0.5'
+    ).fromTo(
+      storyRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1 },
+      '-=0.6'
     )
   }, [])
 
@@ -30,26 +42,34 @@ export default function Hero() {
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0">
       <div ref={containerRef} className="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center h-full">
         <div className="text-left z-10 order-2 md:order-1">
+          <div ref={chapterRef} className="inline-block mb-4">
+            <span className="text-sm font-mono text-primary/80 tracking-widest uppercase">Chapter One</span>
+            <div className="h-px w-16 bg-linear-to-r from-primary/50 to-transparent mt-2" />
+          </div>
           <h1
             ref={titleRef}
             className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-6 bg-clip-text text-transparent bg-linear-to-b from-white to-white/50"
           >
-            Full Stack Developer
+            The Journey Begins
           </h1>
           <p
             ref={subtitleRef}
-            className="text-xl md:text-2xl text-gray-400 max-w-xl leading-relaxed"
+            className="text-xl md:text-2xl text-gray-400 max-w-xl leading-relaxed mb-6"
           >
-            Specializing in React, Node.js, and Scalable Web Architectures.
-            <br />
-            Building modern, animation-driven digital experiences.
+            Every great story starts with a single line of code.
+          </p>
+          <p
+            ref={storyRef}
+            className="text-lg text-gray-500 max-w-xl leading-relaxed italic border-l-2 border-primary/30 pl-4"
+          >
+            "In the vast digital landscape, where ideas transform into reality, I found my calling as a Full Stack Developer. This is my story of passion, persistence, and the pursuit of creating meaningful digital experiences."
           </p>
           <div className="mt-10 flex gap-4">
             <button className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors">
-              View Projects
+              Continue Reading
             </button>
             <button className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 transition-colors font-semibold">
-              Contact Me
+              Skip to Projects
             </button>
           </div>
         </div>

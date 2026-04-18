@@ -4,6 +4,7 @@ import About from '@/components/About'
 import TechStack from '@/components/TechStack'
 import Projects from '@/components/Projects'
 import Experience from '@/components/Experience'
+import Testimonials from '@/components/Testimonials'
 import Contact from '@/components/Contact'
 import Background3D from '@/components/Background3D'
 
@@ -31,6 +32,7 @@ export default async function Home() {
       <TechStack />
       <Projects projects={projects} />
       <Experience experience={experience} />
+      <Testimonials />
       <Contact />
     </main>
   )
