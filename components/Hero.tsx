@@ -7,11 +7,11 @@ import dynamic from 'next/dynamic'
 const HeroModel = dynamic(() => import('./HeroModel'), { ssr: false })
 
 export default function Hero() {
-  const containerRef = useRef(null)
-  const chapterRef = useRef(null)
-  const titleRef = useRef(null)
-  const subtitleRef = useRef(null)
-  const storyRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const chapterRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const subtitleRef = useRef<HTMLParagraphElement>(null)
+  const storyRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -62,7 +62,7 @@ export default function Hero() {
             ref={storyRef}
             className="text-lg text-gray-500 max-w-xl leading-relaxed italic border-l-2 border-primary/30 pl-4"
           >
-            "In the vast digital landscape, where ideas transform into reality, I found my calling as a Full Stack Developer. This is my story of passion, persistence, and the pursuit of creating meaningful digital experiences."
+            "In vast digital landscape, where ideas transform into reality, I found my calling as a Full Stack Developer. This is my story of passion, persistence, and pursuit of creating meaningful digital experiences."
           </p>
           <div className="mt-10 flex gap-4">
             <button className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors">
@@ -79,7 +79,7 @@ export default function Hero() {
             <HeroModel />
           </Suspense>
           
-          {/* Subtle glow behind the model */}
+          {/* Subtle glow behind model */}
           <div className="absolute inset-0 bg-cyan-500/10 blur-[120px] rounded-full -z-10" />
         </div>
       </div>

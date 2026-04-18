@@ -10,42 +10,46 @@ import {
   useGLTF,
   useAnimations
 } from '@react-three/drei'
+import * as THREE from 'three'
 
 function TokyoModel() {
-  const group = useRef()
+  const group = useRef<THREE.Group>(null)
   const { scene, animations } = useGLTF('/models/tokyo/scene.gltf')
   const { actions } = useAnimations(animations, group)
 
   useEffect(() => {
-    // 1. Fix corrupted geometry nodes inside the GLTF.
-    //    Some meshes in the Littlest Tokyo model have empty or invalid
+    // 1. Fix corrupted geometry nodes inside GLTF.
+    //    Some meshes in Littlest Tokyo model have empty or invalid
     //    position attributes, producing NaN bounding spheres which crash WebGL.
     scene.traverse((node) => {
       node.frustumCulled = false
 
-      if ((node.isMesh || node.isLine || node.isPoints) && node.geometry) {
-        const posAttr = node.geometry.attributes.position
-        if (posAttr) {
-          // Check for NaN values in the position buffer and zero them out
-          const arr = posAttr.array
-          let hasNaN = false
-          for (let i = 0; i < arr.length; i++) {
-            if (isNaN(arr[i])) {
-              arr[i] = 0
-              hasNaN = true
+      if ('isMesh' in node || 'isLine' in node || 'isPoints' in node) {
+        const meshNode = node as THREE.Mesh | THREE.Line | THREE.Points
+        if (meshNode.geometry) {
+          const posAttr = meshNode.geometry.attributes.position
+          if (posAttr) {
+            // Check for NaN values in position buffer and zero them out
+            const arr = posAttr.array
+            let hasNaN = false
+            for (let i = 0; i < arr.length; i++) {
+              if (isNaN(arr[i])) {
+                arr[i] = 0
+                hasNaN = true
+              }
+            }
+            if (hasNaN) {
+              posAttr.needsUpdate = true
             }
           }
-          if (hasNaN) {
-            posAttr.needsUpdate = true
-          }
+          // Force recompute bounding volumes with clean data
+          meshNode.geometry.computeBoundingSphere()
+          meshNode.geometry.computeBoundingBox()
         }
-        // Force recompute bounding volumes with clean data
-        node.geometry.computeBoundingSphere()
-        node.geometry.computeBoundingBox()
       }
     })
 
-    // 2. Play the first animation found in the model
+    // 2. Play first animation found in model
     const action = actions[Object.keys(actions)[0]]
     if (action) {
       action.play()
@@ -77,7 +81,7 @@ export default function HeroModel() {
         
         {/* OrbitControls instead of PresentationControls — 
             PresentationControls uses spring physics that can degenerate 
-            on repeated rotations, collapsing the transform matrix */}
+            on repeated rotations, collapsing transform matrix */}
         <OrbitControls 
           enableZoom={false}
           enablePan={false}
@@ -105,5 +109,5 @@ export default function HeroModel() {
   )
 }
 
-// Preload the heavy model
+// Preload heavy model
 useGLTF.preload('/models/tokyo/scene.gltf')

@@ -41,3 +41,16 @@ model Skill {
   icon      String?  // Lucide icon name or URL
   level     Int?     // 1-100
 }
+
+
+model Testimonial{
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  company   String
+  content   String
+  rating    Int
+  story     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -7,6 +7,7 @@ async function main() {
     await prisma.project.deleteMany()
     await prisma.experience.deleteMany()
     await prisma.skill.deleteMany()
+    await prisma.testimonial.deleteMany()
 
     // Projects — from Shuvam's resume
     await prisma.project.createMany({
@@ -137,6 +138,37 @@ async function main() {
             { name: 'Firebase', category: 'Tools', level: 80 },
             { name: 'Razorpay', category: 'Tools', level: 75 },
             { name: 'Git', category: 'Tools', level: 90 },
+        ],
+    })
+
+    // Testimonials — from Testimonials.jsx
+    await prisma.testimonial.createMany({
+        data: [
+            {
+                name: 'Saswata Chowdhury',
+                role: 'Chief Operating Officer',
+                company: 'Appygo Services Pvt Ltd',
+                content: 'Shuvam approaches every project like a new chapter in a book. His attention to detail and creative problem-solving turned our complex requirements into elegant solutions.',
+                rating: 5,
+                story: 'When technical excellence meets creative vision',
+            },
+            {
+
+                name: 'Prabhat Kumar',
+                role: 'Chief Technical Officer',
+                company: 'Appygo Services Pvt Ltd',
+                content: "Working with Shuvam was like having a storyteller translate our vision into code. He didn't just build features—he crafted experiences that our users fell in love with.",
+                rating: 5,
+                story: 'The collaboration that transformed our product',
+            },
+            {
+                name: 'Anirban Dasgupta',
+                role: 'Chief Executive Officer',
+                company: 'Pegman India Pvt Ltd',
+                content: 'Shuvam is a rare blend of creativity and technical expertise. He doesn\'t just write code—he builds stories. His ability to translate complex ideas into seamless user experiences is remarkable.',
+                rating: 5,
+                story: 'A rare blend of creativity and technical expertise',
+            },
         ],
     })
 

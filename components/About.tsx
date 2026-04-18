@@ -8,11 +8,11 @@ import { Code2, Zap, Rocket, Heart } from 'lucide-react'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function About() {
-  const containerRef = useRef(null)
-  const chapterRef = useRef(null)
-  const titleRef = useRef(null)
-  const storyRef = useRef(null)
-  const milestonesRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const chapterRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const storyRef = useRef<HTMLDivElement>(null)
+  const milestonesRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -37,7 +37,7 @@ export default function About() {
       { y: 0, opacity: 1, duration: 1 },
       '-=0.6'
     ).fromTo(
-      milestonesRef.current.children,
+      milestonesRef.current?.children || [],
       { y: 40, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.8, stagger: 0.2 },
       '-=0.5'
@@ -50,7 +50,7 @@ export default function About() {
         <div className="text-center mb-16">
           <div ref={chapterRef} className="inline-block mb-4">
             <span className="text-sm font-mono text-primary/80 tracking-widest uppercase">Chapter Two</span>
-            <div className="h-px w-16 bg-gradient-to-r from-primary/50 to-transparent mx-auto mt-2" />
+            <div className="h-px w-16 bg-linear-to-r from-primary/50 to-transparent mx-auto mt-2" />
           </div>
           <h2 ref={titleRef} className="text-4xl md:text-5xl font-bold mb-6">The Origin Story</h2>
         </div>

@@ -7,11 +7,25 @@ import { Briefcase, Calendar, MapPin } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Experience({ experience }) {
-  const containerRef = useRef(null)
-  const chapterRef = useRef(null)
-  const titleRef = useRef(null)
-  const introRef = useRef(null)
+interface Experience {
+  id: string
+  role: string
+  company: string
+  startDate: Date
+  endDate: Date | null
+  description: string
+  skills: string[]
+}
+
+interface ExperienceProps {
+  experience: Experience[]
+}
+
+export default function Experience({ experience }: ExperienceProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const chapterRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const introRef = useRef<HTMLParagraphElement>(null)
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -37,22 +51,24 @@ export default function Experience({ experience }) {
       '-=0.6'
     )
 
-    const timelineItems = containerRef.current.querySelectorAll('.timeline-item')
-    gsap.fromTo(
-      timelineItems,
-      { x: -50, opacity: 0 },
-      {
-        x: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.2,
-        scrollTrigger: {
-          trigger: containerRef.current.querySelector('.timeline-container'),
-          start: 'top 70%',
-        },
-      }
-    )
-  }, [])
+    const timelineItems = containerRef.current?.querySelectorAll('.timeline-item')
+    if (timelineItems && timelineItems.length > 0) {
+      gsap.fromTo(
+        timelineItems,
+        { x: -50, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: containerRef.current?.querySelector('.timeline-container'),
+            start: 'top 70%',
+          },
+        }
+      )
+    }
+  }, [experience])
 
   return (
     <section id="experience" className="py-24 px-6 bg-white/5 relative">
@@ -64,7 +80,7 @@ export default function Experience({ experience }) {
           </div>
           <h2 ref={titleRef} className="text-4xl md:text-5xl font-bold mb-6">The Adventures</h2>
           <p ref={introRef} className="text-lg text-gray-400 max-w-2xl mx-auto italic">
-            "Every role, every project, every challenge has been a stepping stone in this incredible journey. Here are the chapters of my professional story."
+            "Every role, every project, every challenge has been a stepping stone in this incredible journey. Here are, chapters of my professional story."
           </p>
         </div>
 

@@ -8,11 +8,11 @@ import { Mail, Linkedin, Github, Twitter, MessageCircle, PenTool } from 'lucide-
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Contact() {
-  const containerRef = useRef(null)
-  const chapterRef = useRef(null)
-  const titleRef = useRef(null)
-  const storyRef = useRef(null)
-  const contentRef = useRef(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const chapterRef = useRef<HTMLDivElement>(null)
+  const titleRef = useRef<HTMLHeadingElement>(null)
+  const storyRef = useRef<HTMLParagraphElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const tl = gsap.timeline({
@@ -37,7 +37,7 @@ export default function Contact() {
       { y: 0, opacity: 1, duration: 1 },
       '-=0.6'
     ).fromTo(
-      contentRef.current.children,
+      contentRef.current?.children || [],
       { y: 40, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.8, stagger: 0.2 },
       '-=0.5'
@@ -83,7 +83,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <div className="text-sm text-gray-500 mb-4">Follow the Journey</div>
+              <div className="text-sm text-gray-500 mb-4">Follow</div>
               <div className="flex gap-4">
                 <a href="https://github.com/GamerQuanTuM" target='_blank' rel='noopener noreferrer' className="p-3 rounded-xl bg-white/5 hover:bg-white/10 hover:text-primary transition-all hover:-translate-y-1">
                   <Github className="w-6 h-6" />
@@ -143,7 +143,7 @@ export default function Contact() {
 
         <div className="mt-16 text-center">
           <div className="inline-block">
-            <p className="text-gray-500 text-sm mb-2">And so the story continues...</p>
+            <p className="text-gray-500 text-sm mb-2">And so, story continues...</p>
             <div className="flex items-center justify-center gap-2">
               <div className="w-2 h-2 rounded-full bg-primary/50 animate-pulse" />
               <div className="w-2 h-2 rounded-full bg-primary/70 animate-pulse delay-100" />
