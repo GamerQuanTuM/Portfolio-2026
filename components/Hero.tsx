@@ -3,6 +3,7 @@
 import { useEffect, useRef, Suspense } from 'react'
 import gsap from 'gsap'
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 
 const HeroModel = dynamic(() => import('./HeroModel'), { ssr: false })
 
@@ -65,12 +66,18 @@ export default function Hero() {
             "In vast digital landscape, where ideas transform into reality, I found my calling as a Full Stack Developer. This is my story of passion, persistence, and pursuit of creating meaningful digital experiences."
           </p>
           <div className="mt-10 flex gap-4">
-            <button className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors">
+            <Link
+              href="#about"
+              className="px-8 py-4 rounded-full bg-white text-black font-semibold hover:bg-white/90 transition-colors cursor-pointer"
+            >
               Continue Reading
-            </button>
-            <button className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 transition-colors font-semibold">
+            </Link>
+            <Link
+              href="#projects"
+              className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 transition-colors font-semibold cursor-pointer"
+            >
               Skip to Projects
-            </button>
+            </Link>
           </div>
         </div>
         
